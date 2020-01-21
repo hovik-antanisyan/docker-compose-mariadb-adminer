@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  db:
+    image: mariadb:10.3
+    volumes:
+      - ./docker/mariadb:/docker-entrypoint-initdb.d/
+      - ./databases:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    command:
+      'mysqld --innodb-flush-method=fsync'
+
+  adminer:
+    build: ./adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+    - 9090:8080
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: Pass123
+      PMA_HOST: mysql

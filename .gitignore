@@ -1,0 +1,5 @@
+## exclude DB files
+databases/
+
+## exclude env
+.env
